@@ -5,6 +5,14 @@ exports.getCouponsByMerchant = async (req, res) => {
   const { merchantId } = req.params;
   const { userId } = req.query;
 
+  if (!userId) {
+    return res.status(401).json({
+      message: "User ID missing",
+      isSubscribed: false,
+      coupons: []
+    });
+  }
+
   try {
     const coupons = await Coupon.find({ merchantId });
 
